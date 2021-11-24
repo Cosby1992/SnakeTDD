@@ -28,4 +28,14 @@ public class Game extends Application {
         launch();
     }
 
+    /**
+     * This inner class is in place to avoid conflicts with testFX framework and java modules.
+     * Without this the test framework is not allowed to access the application.
+     */
+    static class GameLauncher {
+        public static void main(String[] args) {
+            Game.main(args);
+        }
+    }
+
 }
