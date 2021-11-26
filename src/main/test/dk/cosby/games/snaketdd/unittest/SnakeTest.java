@@ -30,7 +30,7 @@ class SnakeTest {
     }
 
     @Test
-    void move_must_move_snake_in_move_direction() {
+    void move_must_move_snake_in_move_direction_right() {
         Snake snake = new Snake();
         snake.createNewSnake();
 
@@ -57,5 +57,35 @@ class SnakeTest {
         assertEquals(TILE_WIDTH, minX);
         assertEquals(0, minY);
         assertEquals(0, maxY);
+    }
+
+    @Test
+    void move_must_move_snake_in_move_direction_down() {
+        Snake snake = new Snake();
+        snake.createNewSnake();
+
+        snake.move('D');
+
+        Group snakeGroup = snake.getSnake();
+
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxX = 0;
+        int maxY = 0;
+
+        for(Node n : snakeGroup.getChildren()) {
+            if(n instanceof Rectangle) {
+                Rectangle snakeBody = ((Rectangle) n);
+                if(minX > snakeBody.getX()) minX = (int) snakeBody.getX();
+                if(maxX < snakeBody.getX()) maxX = (int) snakeBody.getX();
+                if(minY > snakeBody.getY()) minY = (int) snakeBody.getY();
+                if(maxY < snakeBody.getY()) maxY = (int) snakeBody.getY();
+            }
+        }
+
+        assertEquals(2 * TILE_WIDTH, maxX);
+        assertEquals(TILE_WIDTH, minX);
+        assertEquals(0, minY);
+        assertEquals(TILE_HEIGHT, maxY);
     }
 }
