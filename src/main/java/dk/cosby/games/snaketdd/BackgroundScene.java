@@ -7,11 +7,12 @@ import javafx.scene.shape.Rectangle;
 
 import static dk.cosby.games.snaketdd.GameConstants.*;
 
-public class BackgroundScene {
+public class BackgroundScene implements GameObject {
 
-    public static Group createBackground() {
+    public Group backgroundGroup = new Group();
 
-        Group backgroundGroup = new Group();
+    public Group createBackground() {
+
         backgroundGroup.setId("background");
 
         for (int i = 0; i < GRID_SIZE; i++) {
@@ -28,4 +29,17 @@ public class BackgroundScene {
         return backgroundGroup;
     }
 
+    public Group getBackgroundGroup() {
+        return backgroundGroup;
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void checkAndHandleCollision(GameObject other) {
+
+    }
 }

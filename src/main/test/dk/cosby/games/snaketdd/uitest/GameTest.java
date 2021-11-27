@@ -3,12 +3,14 @@ package dk.cosby.games.snaketdd.uitest;
 import dk.cosby.games.snaketdd.Initializer;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
@@ -183,6 +185,36 @@ class GameTest {
         assertEquals(0, snakeMinY);
         assertEquals(TILE_WIDTH * 2, snakeMaxX);
         assertEquals(0, snakeMaxY);
+
+    }
+
+    @Test
+    void snake_must_go_down_when_s_is_pressed(FxRobot robot) {
+
+        robot.push(KeyCode.S);
+
+        int snakeMaxY = Integer.MIN_VALUE;
+
+        for(Node node : root.getChildren()) {
+            if(node instanceof Group) {
+                if(((Group) node).getId() != null && ((Group) node).getId().equals("snake")) {
+                    for (Node n : ((Group) node).getChildren()) {
+
+                        if(n instanceof Rectangle) {
+
+                            int y = (int) ((Rectangle) n).getY();
+
+                            if(y > snakeMaxY) {
+                                snakeMaxY = y;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        assertTrue(snakeMaxY > 0);
 
     }
 
