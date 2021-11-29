@@ -76,95 +76,94 @@ Current scope:     <a href="../../index.html">all classes</a>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dk.cosby.games.snaketdd;
 <i class="no-highlight">2</i>&nbsp;
 <i class="no-highlight">3</i>&nbsp;import javafx.geometry.Point2D;
-<i class="no-highlight">4</i>&nbsp;import javafx.scene.effect.Light;
-<i class="no-highlight">5</i>&nbsp;import javafx.scene.paint.Color;
-<i class="no-highlight">6</i>&nbsp;import javafx.scene.shape.Circle;
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;import static dk.cosby.games.snaketdd.GameConstants.*;
-<i class="no-highlight">9</i>&nbsp;
-<i class="no-highlight">10</i>&nbsp;/**
-<i class="no-highlight">11</i>&nbsp; * This class handles code to generate an &quot;apple&quot; for the snake to eat
-<i class="no-highlight">12</i>&nbsp; */
-<b class="fc"><i class="no-highlight">13</i>&nbsp;public class Apple implements GameObject {</b>
-<i class="no-highlight">14</i>&nbsp;
-<i class="no-highlight">15</i>&nbsp;    private Circle apple;
-<i class="no-highlight">16</i>&nbsp;
-<i class="no-highlight">17</i>&nbsp;    /**
-<i class="no-highlight">18</i>&nbsp;     * Creates a new apple on a random location within the game window
-<i class="no-highlight">19</i>&nbsp;     */
-<i class="no-highlight">20</i>&nbsp;    public void createNewApple() {
-<b class="fc"><i class="no-highlight">21</i>&nbsp;        int applePosX = TILE_WIDTH / 2;</b>
-<b class="fc"><i class="no-highlight">22</i>&nbsp;        int applePosY = TILE_HEIGHT / 2;</b>
-<i class="no-highlight">23</i>&nbsp;
-<b class="fc"><i class="no-highlight">24</i>&nbsp;        int x = ((int) (Math.random() * GRID_SIZE) * TILE_WIDTH + applePosX);</b>
-<b class="fc"><i class="no-highlight">25</i>&nbsp;        int y = ((int) (Math.random() * GRID_SIZE) * TILE_HEIGHT + applePosY);</b>
-<i class="no-highlight">26</i>&nbsp;
-<b class="fc"><i class="no-highlight">27</i>&nbsp;        Circle apple = new Circle(x, y, applePosX, Color.RED);</b>
-<i class="no-highlight">28</i>&nbsp;
-<b class="fc"><i class="no-highlight">29</i>&nbsp;        apple.setId(&quot;apple&quot;);</b>
-<i class="no-highlight">30</i>&nbsp;
-<b class="fc"><i class="no-highlight">31</i>&nbsp;        this.apple = apple;</b>
-<i class="no-highlight">32</i>&nbsp;    }
+<i class="no-highlight">4</i>&nbsp;import javafx.scene.paint.Color;
+<i class="no-highlight">5</i>&nbsp;import javafx.scene.shape.Circle;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import static dk.cosby.games.snaketdd.GameConstants.*;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;/**
+<i class="no-highlight">10</i>&nbsp; * This class handles code to generate an &quot;apple&quot; for the snake to eat
+<i class="no-highlight">11</i>&nbsp; */
+<b class="fc"><i class="no-highlight">12</i>&nbsp;public class Apple implements GameObject {</b>
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    private Circle apple;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;    /**
+<i class="no-highlight">17</i>&nbsp;     * Creates a new apple on a random location within the game window
+<i class="no-highlight">18</i>&nbsp;     */
+<i class="no-highlight">19</i>&nbsp;    public void createNewApple() {
+<b class="fc"><i class="no-highlight">20</i>&nbsp;        int applePosX = TILE_WIDTH / 2;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        int applePosY = TILE_HEIGHT / 2;</b>
+<i class="no-highlight">22</i>&nbsp;
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        int x = ((int) (Math.random() * GRID_SIZE) * TILE_WIDTH + applePosX);</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        int y = ((int) (Math.random() * GRID_SIZE) * TILE_HEIGHT + applePosY);</b>
+<i class="no-highlight">25</i>&nbsp;
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        Circle apple = new Circle(x, y, applePosX, Color.RED);</b>
+<i class="no-highlight">27</i>&nbsp;
+<b class="fc"><i class="no-highlight">28</i>&nbsp;        apple.setId(&quot;apple&quot;);</b>
+<i class="no-highlight">29</i>&nbsp;
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        this.apple = apple;</b>
+<i class="no-highlight">31</i>&nbsp;    }
+<i class="no-highlight">32</i>&nbsp;
 <i class="no-highlight">33</i>&nbsp;
-<i class="no-highlight">34</i>&nbsp;
-<i class="no-highlight">35</i>&nbsp;    @Override
-<i class="no-highlight">36</i>&nbsp;    public void update() {
-<i class="no-highlight">37</i>&nbsp;        // Empty since apple should not do anything with each game-tick
-<i class="no-highlight">38</i>&nbsp;    }
-<i class="no-highlight">39</i>&nbsp;
-<i class="no-highlight">40</i>&nbsp;    /**
-<i class="no-highlight">41</i>&nbsp;     * Moves the apple, this is instead of generating a new one each time the snake eats the apple
-<i class="no-highlight">42</i>&nbsp;     */
-<i class="no-highlight">43</i>&nbsp;    public void moveApple() {
-<b class="fc"><i class="no-highlight">44</i>&nbsp;        int applePosX = TILE_WIDTH / 2;</b>
-<b class="fc"><i class="no-highlight">45</i>&nbsp;        int applePosY = TILE_HEIGHT / 2;</b>
-<i class="no-highlight">46</i>&nbsp;
-<i class="no-highlight">47</i>&nbsp;        int x;
-<i class="no-highlight">48</i>&nbsp;        int y;
-<i class="no-highlight">49</i>&nbsp;
-<i class="no-highlight">50</i>&nbsp;        while (true){
-<b class="fc"><i class="no-highlight">51</i>&nbsp;            x = ((int) (Math.random() * GRID_SIZE) * TILE_WIDTH + applePosX);</b>
-<b class="fc"><i class="no-highlight">52</i>&nbsp;            y = ((int) (Math.random() * GRID_SIZE) * TILE_HEIGHT + applePosY);</b>
-<i class="no-highlight">53</i>&nbsp;
-<b class="fc"><i class="no-highlight">54</i>&nbsp;            if(x != (int) apple.getCenterX() &amp;&amp; y != (int) apple.getCenterY()) {</b>
-<b class="fc"><i class="no-highlight">55</i>&nbsp;                apple.setCenterX(x);</b>
-<b class="fc"><i class="no-highlight">56</i>&nbsp;                apple.setCenterY(y);</b>
-<b class="fc"><i class="no-highlight">57</i>&nbsp;                break;</b>
-<i class="no-highlight">58</i>&nbsp;            }
-<i class="no-highlight">59</i>&nbsp;        }
-<i class="no-highlight">60</i>&nbsp;
-<i class="no-highlight">61</i>&nbsp;    }
-<i class="no-highlight">62</i>&nbsp;
-<i class="no-highlight">63</i>&nbsp;    /**
-<i class="no-highlight">64</i>&nbsp;     * Moves the apple, this is instead of generating a new one each time the snake eats the apple
-<i class="no-highlight">65</i>&nbsp;     */
-<i class="no-highlight">66</i>&nbsp;    public void moveApple(int x, int y) {
-<b class="nc"><i class="no-highlight">67</i>&nbsp;        int applePosX = TILE_WIDTH / 2;</b>
-<b class="nc"><i class="no-highlight">68</i>&nbsp;        int applePosY = TILE_HEIGHT / 2;</b>
-<i class="no-highlight">69</i>&nbsp;
-<b class="nc"><i class="no-highlight">70</i>&nbsp;        apple.setCenterX(x * TILE_WIDTH + applePosX);</b>
-<b class="nc"><i class="no-highlight">71</i>&nbsp;        apple.setCenterY(y * TILE_HEIGHT + applePosY);</b>
-<i class="no-highlight">72</i>&nbsp;    }
-<i class="no-highlight">73</i>&nbsp;
-<i class="no-highlight">74</i>&nbsp;    /**
-<i class="no-highlight">75</i>&nbsp;     * Checks collisions with this object
-<i class="no-highlight">76</i>&nbsp;     * @param other The object that is colliding with
-<i class="no-highlight">77</i>&nbsp;     */
-<i class="no-highlight">78</i>&nbsp;    @Override
-<i class="no-highlight">79</i>&nbsp;    public void checkAndHandleCollision(GameObject other) {
-<b class="fc"><i class="no-highlight">80</i>&nbsp;        if(other instanceof Snake snake) {</b>
-<b class="fc"><i class="no-highlight">81</i>&nbsp;            if(snake.getSnake().get(snake.getSnake().size() - 1).getBoundsInLocal().contains(new Point2D(this.apple.getCenterX(), this.apple.getCenterY()))) {</b>
-<i class="no-highlight">82</i>&nbsp;                // if the collision is with a snake
-<i class="no-highlight">83</i>&nbsp;                // Checked by seeing if the snakes head contains the center point of the apple
-<b class="fc"><i class="no-highlight">84</i>&nbsp;                moveApple();</b>
-<i class="no-highlight">85</i>&nbsp;            }
-<i class="no-highlight">86</i>&nbsp;        }
-<i class="no-highlight">87</i>&nbsp;    }
-<i class="no-highlight">88</i>&nbsp;
-<i class="no-highlight">89</i>&nbsp;    public Circle getApple() {
-<b class="fc"><i class="no-highlight">90</i>&nbsp;        return apple;</b>
-<i class="no-highlight">91</i>&nbsp;    }
-<i class="no-highlight">92</i>&nbsp;}
+<i class="no-highlight">34</i>&nbsp;    @Override
+<i class="no-highlight">35</i>&nbsp;    public void update() {
+<i class="no-highlight">36</i>&nbsp;        // Empty since Apple should not do anything with each game-tick
+<i class="no-highlight">37</i>&nbsp;    }
+<i class="no-highlight">38</i>&nbsp;
+<i class="no-highlight">39</i>&nbsp;    /**
+<i class="no-highlight">40</i>&nbsp;     * Moves the apple, this is instead of generating a new one each time the snake eats the apple
+<i class="no-highlight">41</i>&nbsp;     */
+<i class="no-highlight">42</i>&nbsp;    public void moveApple() {
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        int applePosX = TILE_WIDTH / 2;</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        int applePosY = TILE_HEIGHT / 2;</b>
+<i class="no-highlight">45</i>&nbsp;
+<i class="no-highlight">46</i>&nbsp;        int x;
+<i class="no-highlight">47</i>&nbsp;        int y;
+<i class="no-highlight">48</i>&nbsp;
+<i class="no-highlight">49</i>&nbsp;        while (true){
+<b class="fc"><i class="no-highlight">50</i>&nbsp;            x = ((int) (Math.random() * GRID_SIZE) * TILE_WIDTH + applePosX);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;            y = ((int) (Math.random() * GRID_SIZE) * TILE_HEIGHT + applePosY);</b>
+<i class="no-highlight">52</i>&nbsp;
+<b class="fc"><i class="no-highlight">53</i>&nbsp;            if(x != (int) apple.getCenterX() &amp;&amp; y != (int) apple.getCenterY()) {</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;                apple.setCenterX(x);</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;                apple.setCenterY(y);</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;                break;</b>
+<i class="no-highlight">57</i>&nbsp;            }
+<i class="no-highlight">58</i>&nbsp;        }
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;    }
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;    /**
+<i class="no-highlight">63</i>&nbsp;     * Moves the apple, this is instead of generating a new one each time the snake eats the apple
+<i class="no-highlight">64</i>&nbsp;     */
+<i class="no-highlight">65</i>&nbsp;    public void moveApple(int x, int y) {
+<b class="nc"><i class="no-highlight">66</i>&nbsp;        int applePosX = TILE_WIDTH / 2;</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;        int applePosY = TILE_HEIGHT / 2;</b>
+<i class="no-highlight">68</i>&nbsp;
+<b class="nc"><i class="no-highlight">69</i>&nbsp;        apple.setCenterX(x * TILE_WIDTH + applePosX);</b>
+<b class="nc"><i class="no-highlight">70</i>&nbsp;        apple.setCenterY(y * TILE_HEIGHT + applePosY);</b>
+<i class="no-highlight">71</i>&nbsp;    }
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;    /**
+<i class="no-highlight">74</i>&nbsp;     * Checks collisions with this object
+<i class="no-highlight">75</i>&nbsp;     * @param other The object that is colliding with
+<i class="no-highlight">76</i>&nbsp;     */
+<i class="no-highlight">77</i>&nbsp;    @Override
+<i class="no-highlight">78</i>&nbsp;    public void checkAndHandleCollision(GameObject other) {
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        if(other instanceof Snake snake) {</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;            if(snake.getSnake().get(snake.getSnake().size() - 1).getBoundsInLocal().contains(new Point2D(this.apple.getCenterX(), this.apple.getCenterY()))) {</b>
+<i class="no-highlight">81</i>&nbsp;                // if the collision is with a snake
+<i class="no-highlight">82</i>&nbsp;                // Checked by seeing if the snakes head contains the center point of the apple
+<b class="fc"><i class="no-highlight">83</i>&nbsp;                moveApple();</b>
+<i class="no-highlight">84</i>&nbsp;            }
+<i class="no-highlight">85</i>&nbsp;        }
+<i class="no-highlight">86</i>&nbsp;    }
+<i class="no-highlight">87</i>&nbsp;
+<i class="no-highlight">88</i>&nbsp;    public Circle getApple() {
+<b class="fc"><i class="no-highlight">89</i>&nbsp;        return apple;</b>
+<i class="no-highlight">90</i>&nbsp;    }
+<i class="no-highlight">91</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -191,7 +190,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-11-29 16:07</div>
+    <div style="float:right;">generated on 2021-11-29 17:26</div>
 </div>
 </body>
 </html>

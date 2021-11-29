@@ -2,6 +2,10 @@
 
 ## Mockito Powerups
 
+- points one
+- point two
+- etc
+
 ## Snake Game TDD
 ### Environment
 | Name            | Version       |

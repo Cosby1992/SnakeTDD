@@ -50,18 +50,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    66,7%
+    100%
   </span>
   <span class="absValue">
-    (2/3)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    91,7%
+    100%
   </span>
   <span class="absValue">
-    (11/12)
+    (11/11)
   </span>
 </td>
 </tr>
@@ -76,61 +76,56 @@ Current scope:     <a href="../../index.html">all classes</a>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dk.cosby.games.snaketdd;
 <i class="no-highlight">2</i>&nbsp;
 <i class="no-highlight">3</i>&nbsp;import javafx.scene.Group;
-<i class="no-highlight">4</i>&nbsp;import javafx.scene.Scene;
-<i class="no-highlight">5</i>&nbsp;import javafx.scene.paint.Color;
-<i class="no-highlight">6</i>&nbsp;import javafx.scene.shape.Rectangle;
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;import static dk.cosby.games.snaketdd.GameConstants.*;
-<i class="no-highlight">9</i>&nbsp;
-<i class="no-highlight">10</i>&nbsp;/**
-<i class="no-highlight">11</i>&nbsp; * This class generates the background grid
-<i class="no-highlight">12</i>&nbsp; * Implements GameObject to make it possible to detects collisions
-<i class="no-highlight">13</i>&nbsp; */
-<b class="fc"><i class="no-highlight">14</i>&nbsp;public class BackgroundScene implements GameObject {</b>
-<i class="no-highlight">15</i>&nbsp;
-<b class="fc"><i class="no-highlight">16</i>&nbsp;    public Group backgroundGroup = new Group();</b>
-<i class="no-highlight">17</i>&nbsp;
-<i class="no-highlight">18</i>&nbsp;    /**
-<i class="no-highlight">19</i>&nbsp;     * This method generated a grid of green squares
-<i class="no-highlight">20</i>&nbsp;     * @return the grid of Rectangles in a Group
-<i class="no-highlight">21</i>&nbsp;     */
-<i class="no-highlight">22</i>&nbsp;    public Group createBackground() {
-<i class="no-highlight">23</i>&nbsp;
-<b class="fc"><i class="no-highlight">24</i>&nbsp;        backgroundGroup.setId(&quot;background&quot;);</b>
-<i class="no-highlight">25</i>&nbsp;
-<i class="no-highlight">26</i>&nbsp;        // Iterate through a grid of predetermined size (from GameConstants)
-<b class="fc"><i class="no-highlight">27</i>&nbsp;        for (int i = 0; i &lt; GRID_SIZE; i++) {</b>
-<b class="fc"><i class="no-highlight">28</i>&nbsp;            for (int j = 0; j &lt; GRID_SIZE; j++) {</b>
-<i class="no-highlight">29</i>&nbsp;                // create a new rectangle of predetermined size (from GameConstants)
-<b class="fc"><i class="no-highlight">30</i>&nbsp;                Rectangle rectangle = new Rectangle(i * TILE_WIDTH,j * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);</b>
-<i class="no-highlight">31</i>&nbsp;                // color the rectangles, every second rectangle is colored a slightly different color
-<b class="fc"><i class="no-highlight">32</i>&nbsp;                if((i + j) % 2 == 0) rectangle.setFill(Color.rgb(31, 179, 20));</b>
-<b class="fc"><i class="no-highlight">33</i>&nbsp;                else rectangle.setFill(Color.rgb(36, 199, 24));</b>
-<b class="fc"><i class="no-highlight">34</i>&nbsp;                rectangle.setId(&quot;tile&quot; + i + j);</b>
-<b class="fc"><i class="no-highlight">35</i>&nbsp;                backgroundGroup.getChildren().add(rectangle); // add the rectangle to the group</b>
-<i class="no-highlight">36</i>&nbsp;
-<i class="no-highlight">37</i>&nbsp;            }
-<i class="no-highlight">38</i>&nbsp;        }
-<i class="no-highlight">39</i>&nbsp;
-<b class="fc"><i class="no-highlight">40</i>&nbsp;        return backgroundGroup;</b>
-<i class="no-highlight">41</i>&nbsp;    }
-<i class="no-highlight">42</i>&nbsp;
-<i class="no-highlight">43</i>&nbsp;    public Group getBackgroundGroup() {
-<b class="nc"><i class="no-highlight">44</i>&nbsp;        return backgroundGroup;</b>
-<i class="no-highlight">45</i>&nbsp;    }
-<i class="no-highlight">46</i>&nbsp;
-<i class="no-highlight">47</i>&nbsp;    // inherited method, not used for this object
-<i class="no-highlight">48</i>&nbsp;    @Override
-<i class="no-highlight">49</i>&nbsp;    public void update() {
-<i class="no-highlight">50</i>&nbsp;
-<i class="no-highlight">51</i>&nbsp;    }
-<i class="no-highlight">52</i>&nbsp;
-<i class="no-highlight">53</i>&nbsp;    // inherited method, not used for this object
-<i class="no-highlight">54</i>&nbsp;    @Override
-<i class="no-highlight">55</i>&nbsp;    public void checkAndHandleCollision(GameObject other) {
-<i class="no-highlight">56</i>&nbsp;
-<i class="no-highlight">57</i>&nbsp;    }
-<i class="no-highlight">58</i>&nbsp;}
+<i class="no-highlight">4</i>&nbsp;import javafx.scene.paint.Color;
+<i class="no-highlight">5</i>&nbsp;import javafx.scene.shape.Rectangle;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import static dk.cosby.games.snaketdd.GameConstants.*;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;/**
+<i class="no-highlight">10</i>&nbsp; * This class generates the background grid
+<i class="no-highlight">11</i>&nbsp; * Implements GameObject to make it possible to detects collisions
+<i class="no-highlight">12</i>&nbsp; */
+<b class="fc"><i class="no-highlight">13</i>&nbsp;public class BackgroundScene implements GameObject {</b>
+<i class="no-highlight">14</i>&nbsp;
+<b class="fc"><i class="no-highlight">15</i>&nbsp;    public final Group backgroundGroup = new Group();</b>
+<i class="no-highlight">16</i>&nbsp;
+<i class="no-highlight">17</i>&nbsp;    /**
+<i class="no-highlight">18</i>&nbsp;     * This method generated a grid of green squares
+<i class="no-highlight">19</i>&nbsp;     * @return the grid of Rectangles in a Group
+<i class="no-highlight">20</i>&nbsp;     */
+<i class="no-highlight">21</i>&nbsp;    public Group createBackground() {
+<i class="no-highlight">22</i>&nbsp;
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        backgroundGroup.setId(&quot;background&quot;);</b>
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;        // Iterate through a grid of predetermined size (from GameConstants)
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        for (int i = 0; i &lt; GRID_SIZE; i++) {</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;            for (int j = 0; j &lt; GRID_SIZE; j++) {</b>
+<i class="no-highlight">28</i>&nbsp;                // create a new rectangle of predetermined size (from GameConstants)
+<b class="fc"><i class="no-highlight">29</i>&nbsp;                Rectangle rectangle = new Rectangle(i * TILE_WIDTH,j * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);</b>
+<i class="no-highlight">30</i>&nbsp;                // color the rectangles, every second rectangle is colored a slightly different color
+<b class="fc"><i class="no-highlight">31</i>&nbsp;                if((i + j) % 2 == 0) rectangle.setFill(Color.rgb(31, 179, 20));</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;                else rectangle.setFill(Color.rgb(36, 199, 24));</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;                rectangle.setId(&quot;tile&quot; + i + j);</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;                backgroundGroup.getChildren().add(rectangle); // add the rectangle to the group</b>
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;            }
+<i class="no-highlight">37</i>&nbsp;        }
+<i class="no-highlight">38</i>&nbsp;
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        return backgroundGroup;</b>
+<i class="no-highlight">40</i>&nbsp;    }
+<i class="no-highlight">41</i>&nbsp;
+<i class="no-highlight">42</i>&nbsp;    // inherited method, not used for this object
+<i class="no-highlight">43</i>&nbsp;    @Override
+<i class="no-highlight">44</i>&nbsp;    public void update() {
+<i class="no-highlight">45</i>&nbsp;
+<i class="no-highlight">46</i>&nbsp;    }
+<i class="no-highlight">47</i>&nbsp;
+<i class="no-highlight">48</i>&nbsp;    // inherited method, not used for this object
+<i class="no-highlight">49</i>&nbsp;    @Override
+<i class="no-highlight">50</i>&nbsp;    public void checkAndHandleCollision(GameObject other) {
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -157,7 +152,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-11-29 16:07</div>
+    <div style="float:right;">generated on 2021-11-29 17:26</div>
 </div>
 </body>
 </html>

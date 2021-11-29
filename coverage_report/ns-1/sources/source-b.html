@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > UIUpdater</title>
+  <title>Coverage Report > GameObject</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,14 +20,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">dk.cosby.games.snaketdd</a>
 </div>
 
-<h1>Coverage Summary for Class: UIUpdater (dk.cosby.games.snaketdd)</h1>
+<h1>Coverage Summary for Class: GameObject (dk.cosby.games.snaketdd)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">UIUpdater</td>
+  <td class="name">GameObject</td>
 </tr>
 
 </table>
@@ -39,14 +39,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dk.cosby.games.snaketdd;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;public interface UIUpdater {
-<i class="no-highlight">4</i>&nbsp;
-<i class="no-highlight">5</i>&nbsp;    /**
-<i class="no-highlight">6</i>&nbsp;     * Makes it possible to increments the score
-<i class="no-highlight">7</i>&nbsp;     */
-<i class="no-highlight">8</i>&nbsp;    void incrementScore();
-<i class="no-highlight">9</i>&nbsp;
-<i class="no-highlight">10</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;/**
+<i class="no-highlight">4</i>&nbsp; * Interface that makes it possible to handle collisions and
+<i class="no-highlight">5</i>&nbsp; * update entities on game tick
+<i class="no-highlight">6</i>&nbsp; */
+<i class="no-highlight">7</i>&nbsp;public interface GameObject {
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;    /**
+<i class="no-highlight">10</i>&nbsp;     * Called every game-tick
+<i class="no-highlight">11</i>&nbsp;     */
+<i class="no-highlight">12</i>&nbsp;    void update();
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    /**
+<i class="no-highlight">15</i>&nbsp;     * called every game-tick
+<i class="no-highlight">16</i>&nbsp;     * @param other the game-object it&#39;s colliding with
+<i class="no-highlight">17</i>&nbsp;     */
+<i class="no-highlight">18</i>&nbsp;    void checkAndHandleCollision(GameObject other);
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -73,7 +83,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-11-29 16:07</div>
+    <div style="float:right;">generated on 2021-11-29 17:26</div>
 </div>
 </body>
 </html>
