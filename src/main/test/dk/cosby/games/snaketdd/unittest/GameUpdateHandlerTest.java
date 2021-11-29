@@ -11,43 +11,81 @@ class GameUpdateHandlerTest {
 
     @Test
     void startGameLoop_should_start_new_game_thread_which_should_be_alive() {
-        GameUpdateHandler.startGameLoop();
-        Thread thread = GameUpdateHandler.getThread();
+        GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
+        gameUpdateHandler.startGameLoop();
+        Thread thread = gameUpdateHandler.getThread();
 
         assertTrue(thread.isAlive());
     }
 
     @Test
     void startGameLoop_should_set_running_to_true() {
-        GameUpdateHandler.startGameLoop();
+        GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
+        gameUpdateHandler.startGameLoop();
 
-        assertTrue(GameUpdateHandler.isRunning());
+        assertTrue(gameUpdateHandler.isRunning());
     }
 
     @Test
     void stopGame_should_kill_thread() {
-        GameUpdateHandler.startGameLoop();
-        GameUpdateHandler.stopGame();
+        GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
+        gameUpdateHandler.startGameLoop();
+        gameUpdateHandler.stopGame();
 
-        assertFalse(GameUpdateHandler.isRunning());
+        assertFalse(gameUpdateHandler.isRunning());
     }
 
     @Test
     void gameObjects_should_not_contain_objects_at_creation() {
-        assertEquals(0, GameUpdateHandler.getGameObjects().size());
+        GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
+
+        assertEquals(0, gameUpdateHandler.getGameObjects().size());
     }
 
     @Test
     void registerGameObject_should_contain_registered_objects() {
+        GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
 
         Snake snake = new Snake();
         Apple apple = new Apple();
 
-        GameUpdateHandler.registerGameObject(snake);
-        GameUpdateHandler.registerGameObject(apple);
+        gameUpdateHandler.registerGameObject(snake);
+        gameUpdateHandler.registerGameObject(apple);
 
-        assertTrue(GameUpdateHandler.getGameObjects().contains(snake));
-        assertTrue(GameUpdateHandler.getGameObjects().contains(apple));
+        assertTrue(gameUpdateHandler.getGameObjects().contains(snake));
+        assertTrue(gameUpdateHandler.getGameObjects().contains(apple));
 
+    }
+
+    @Test
+    void registerGameObject_should_be_empty_when_registered_objects_are_unregistered() {
+        GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
+
+        Snake snake = new Snake();
+        Apple apple = new Apple();
+
+        gameUpdateHandler.registerGameObject(snake);
+        gameUpdateHandler.registerGameObject(apple);
+
+        gameUpdateHandler.unregisterGameObject(snake);
+        gameUpdateHandler.unregisterGameObject(apple);
+
+        assertEquals(0, gameUpdateHandler.getGameObjects().size());
+    }
+
+    @Test
+    void registerGameObject_should_contain_snake_when_apple_is_removed() {
+        GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
+
+        Snake snake = new Snake();
+        Apple apple = new Apple();
+
+        gameUpdateHandler.registerGameObject(snake);
+        gameUpdateHandler.registerGameObject(apple);
+
+        gameUpdateHandler.unregisterGameObject(apple);
+
+        assertTrue(gameUpdateHandler.getGameObjects().contains(snake));
+        assertFalse(gameUpdateHandler.getGameObjects().contains(apple));
     }
 }

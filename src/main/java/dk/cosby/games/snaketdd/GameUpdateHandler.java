@@ -10,15 +10,15 @@ import java.util.ArrayList;
  */
 public class GameUpdateHandler {
 
-    // gameObject contains all gameObjects influenced by the game-loop
-    private static final ArrayList<GameObject> gameObjects = new ArrayList<>();
-    private static Thread thread;
-    private static boolean running;
+    // gameObjects contains all gameObjects influenced by the game-loop
+    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private Thread thread;
+    private boolean running;
 
     /**
      * This method initializes a game-loop on a new thread
      */
-    public static void startGameLoop() {
+    public void startGameLoop() {
 
         running = true;
 
@@ -55,27 +55,27 @@ public class GameUpdateHandler {
         thread.start();
     }
 
-    public static void registerGameObject(GameObject gameObject) {
+    public void registerGameObject(GameObject gameObject) {
         gameObjects.add(gameObject);
     }
 
-    public static void unregisterGameObject(GameObject gameObject) {
+    public void unregisterGameObject(GameObject gameObject) {
         gameObjects.remove(gameObject);
     }
 
-    public static void stopGame() {
+    public void stopGame() {
         running = false;
     }
 
-    public static Thread getThread() {
+    public Thread getThread() {
         return thread;
     }
 
-    public static boolean isRunning() {
+    public boolean isRunning() {
         return running;
     }
 
-    public static ArrayList<GameObject> getGameObjects() {
+    public ArrayList<GameObject> getGameObjects() {
         return gameObjects;
     }
 }

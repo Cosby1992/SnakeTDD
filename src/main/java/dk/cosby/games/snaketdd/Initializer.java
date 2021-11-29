@@ -21,6 +21,7 @@ public class Initializer {
     private final UI ui = new UI();
     private final Snake snake = new Snake(this, ui);
     private final Apple apple = new Apple();
+    private GameUpdateHandler gameUpdateHandler = new GameUpdateHandler();
 
     /**
      * Initializes a new game
@@ -46,11 +47,7 @@ public class Initializer {
         primaryStage.setTitle("Snake");
         primaryStage.getIcons().add(LOGO);
 
-        // removes the gameobjects from the array being iterated
-        // through to handle updates and collisions
-        GameUpdateHandler.unregisterGameObject(snake);
-        GameUpdateHandler.unregisterGameObject(apple);
-        GameUpdateHandler.unregisterGameObject(background);
+        gameUpdateHandler = new GameUpdateHandler();
 
         background = new BackgroundScene();
 
@@ -69,9 +66,9 @@ public class Initializer {
 
         // registers all the new gameobjects to the array being iterated
         // through to handle updates and collisions
-        GameUpdateHandler.registerGameObject(snake);
-        GameUpdateHandler.registerGameObject(apple);
-        GameUpdateHandler.registerGameObject(background);
+        gameUpdateHandler.registerGameObject(snake);
+        gameUpdateHandler.registerGameObject(apple);
+        gameUpdateHandler.registerGameObject(background);
 
         primaryStage.setScene(gameScene);
         primaryStage.setResizable(false);
@@ -85,12 +82,7 @@ public class Initializer {
      * with all new gameobjects
      */
     public void newGame() {
-
-        // removes the gameobjects from the array being iterated
-        // through to handle updates and collisions
-        GameUpdateHandler.unregisterGameObject(snake);
-        GameUpdateHandler.unregisterGameObject(apple);
-        GameUpdateHandler.unregisterGameObject(background);
+        gameUpdateHandler = new GameUpdateHandler();
 
         background = new BackgroundScene();
 
@@ -109,24 +101,24 @@ public class Initializer {
 
         // registers all the new gameobjects to the array being iterated
         // through to handle updates and collisions
-        GameUpdateHandler.registerGameObject(snake);
-        GameUpdateHandler.registerGameObject(apple);
-        GameUpdateHandler.registerGameObject(background);
+        gameUpdateHandler.registerGameObject(snake);
+        gameUpdateHandler.registerGameObject(apple);
+        gameUpdateHandler.registerGameObject(background);
 
         // Start the game loop
-        GameUpdateHandler.startGameLoop();
+        gameUpdateHandler.startGameLoop();
     }
 
     public void gameOver() {
-        GameUpdateHandler.stopGame();
+        gameUpdateHandler.stopGame();
     }
 
     public void stopGame() {
-        GameUpdateHandler.stopGame();
+        gameUpdateHandler.stopGame();
     }
 
     public void resumeGame() {
-        GameUpdateHandler.startGameLoop();
+        gameUpdateHandler.startGameLoop();
     }
 
     public Scene getGameScene() {
