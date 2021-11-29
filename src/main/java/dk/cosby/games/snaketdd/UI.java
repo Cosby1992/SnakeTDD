@@ -9,12 +9,22 @@ import javafx.scene.text.Text;
 
 import static dk.cosby.games.snaketdd.GameConstants.*;
 
+/**
+ * This class handles the UI for the game
+ * Implements UI adapter to make it possible for other
+ * classes to update the UI
+ */
 public class UI implements UIUpdater {
 
     private Group ui = new Group();
     private int points = 0;
     private Text pointsText = new Text();
 
+    /**
+     * This method creates the UI, this is currently only text
+     * describing points collected through the game
+     * @return
+     */
     public Group createUI() {
 
         pointsText.setText(String.valueOf(points));

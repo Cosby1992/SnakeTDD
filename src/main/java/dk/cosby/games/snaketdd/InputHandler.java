@@ -4,6 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * This class handles input from the user (keyboard)
+ */
 public class InputHandler {
 
     private static boolean gameRunning = true;
@@ -12,31 +15,38 @@ public class InputHandler {
         gameRunning = !gameRunning;
     }
 
-    public static void listenForKeyInput(Scene game, Snake snake, Initializer initializer) {
+    /**
+     * This method maps keyboard inputs to functionality
+     * @param context
+     */
+    public static void listenForKeyInput(Initializer context) {
 
-        game.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+        // Attaches eventhandler to game scene
+        context.getGameScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
 
+            // checking the inputs W,A,S,D and space
             if(key.getCode() == KeyCode.W) {
                 // snakey go up
-                snake.setDirection('U');
+                context.getSnake().setDirection('U');
             }
             if(key.getCode() == KeyCode.S) {
                 // snakey go Down
-                snake.setDirection('D');
+                context.getSnake().setDirection('D');
             }
             if(key.getCode() == KeyCode.A) {
                 // snakey go left
-                snake.setDirection('L');
+                context.getSnake().setDirection('L');
             }
             if(key.getCode() == KeyCode.D) {
                 // snakey go right
-                snake.setDirection('R');
+                context.getSnake().setDirection('R');
             }
             if(key.getCode() == KeyCode.SPACE) {
+                // SPACE is used to pause and resume the game loop
                 toggleRunning();
 
-                if(!gameRunning) initializer.stopGame();
-                else initializer.resumeGame();
+                if(!gameRunning) context.stopGame();
+                else context.resumeGame();
             }
         });
 
