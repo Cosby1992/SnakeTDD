@@ -26,7 +26,7 @@ public class Game extends Application {
 
     /**
      * Launches the application
-     * @param args
+     * @param args arguments for the program, not used
      */
     public static void main(String[] args) {
         launch();

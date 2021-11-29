@@ -1,6 +1,5 @@
 package dk.cosby.games.snaketdd;
 
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -17,7 +16,7 @@ public class InputHandler {
 
     /**
      * This method maps keyboard inputs to functionality
-     * @param context
+     * @param context the current game context
      */
     public static void listenForKeyInput(Initializer context) {
 

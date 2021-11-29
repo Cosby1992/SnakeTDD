@@ -16,20 +16,20 @@ import static dk.cosby.games.snaketdd.GameConstants.*;
  */
 public class UI implements UIUpdater {
 
-    private Group ui = new Group();
+    private final Group ui = new Group();
     private int points = 0;
-    private Text pointsText = new Text();
+    private final Text pointsText = new Text();
 
     /**
      * This method creates the UI, this is currently only text
      * describing points collected through the game
-     * @return
+     * @return The UI as a group
      */
     public Group createUI() {
 
         pointsText.setText(String.valueOf(points));
         pointsText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        pointsText.setX(((TILE_WIDTH * GRID_SIZE) / 2) - (pointsText.getLayoutBounds().getWidth() / 2));
+        pointsText.setX(((TILE_WIDTH * GRID_SIZE) / 2.0) - (pointsText.getLayoutBounds().getWidth() / 2));
         pointsText.setY(0.5 * TILE_HEIGHT * 3);
         pointsText.setFill(Color.rgb(255,255,255));
 
@@ -40,11 +40,6 @@ public class UI implements UIUpdater {
 
     private void incrementPoints() {
         points++;
-        pointsText.setText(String.valueOf(points));
-    }
-
-    private void resetPoints() {
-        points = 0;
         pointsText.setText(String.valueOf(points));
     }
 

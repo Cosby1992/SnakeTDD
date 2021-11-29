@@ -42,6 +42,44 @@ public class Initializer {
         return root;
     }
 
+    public Group initGameWithNoGameLoop(Stage primaryStage) {
+        primaryStage.setTitle("Snake");
+        primaryStage.getIcons().add(LOGO);
+
+        // removes the gameobjects from the array being iterated
+        // through to handle updates and collisions
+        GameUpdateHandler.unregisterGameObject(snake);
+        GameUpdateHandler.unregisterGameObject(apple);
+        GameUpdateHandler.unregisterGameObject(background);
+
+        background = new BackgroundScene();
+
+        root = background.createBackground();
+
+        apple.createNewApple();
+        // adds the game objects to the root Group
+        root.getChildren().add(apple.getApple());
+        root.getChildren().add(snake.createNewSnake());
+        root.getChildren().add(ui.createUI());
+
+        gameScene = new Scene(root);
+
+        // Initializes a new input-handler
+        InputHandler.listenForKeyInput(this);
+
+        // registers all the new gameobjects to the array being iterated
+        // through to handle updates and collisions
+        GameUpdateHandler.registerGameObject(snake);
+        GameUpdateHandler.registerGameObject(apple);
+        GameUpdateHandler.registerGameObject(background);
+
+        primaryStage.setScene(gameScene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+
+        return root;
+    }
+
     /**
      * This method resets everything to the beginning of the game
      * with all new gameobjects

@@ -1,7 +1,6 @@
 package dk.cosby.games.snaketdd;
 
 import javafx.geometry.Point2D;
-import javafx.scene.effect.Light;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -31,27 +30,44 @@ public class Apple implements GameObject {
         this.apple = apple;
     }
 
-    public Circle getApple() {
-        return apple;
-    }
 
     @Override
     public void update() {
-        // Empty since apple should not do anything with each game-tick
+        // Empty since Apple should not do anything with each game-tick
     }
 
     /**
      * Moves the apple, this is instead of generating a new one each time the snake eats the apple
      */
-    private void moveApple() {
+    public void moveApple() {
         int applePosX = TILE_WIDTH / 2;
         int applePosY = TILE_HEIGHT / 2;
 
-        int x = ((int) (Math.random() * GRID_SIZE) * TILE_WIDTH + applePosX);
-        int y = ((int) (Math.random() * GRID_SIZE) * TILE_HEIGHT + applePosY);
+        int x;
+        int y;
 
-        apple.setCenterX(x);
-        apple.setCenterY(y);
+        while (true){
+            x = ((int) (Math.random() * GRID_SIZE) * TILE_WIDTH + applePosX);
+            y = ((int) (Math.random() * GRID_SIZE) * TILE_HEIGHT + applePosY);
+
+            if(x != (int) apple.getCenterX() && y != (int) apple.getCenterY()) {
+                apple.setCenterX(x);
+                apple.setCenterY(y);
+                break;
+            }
+        }
+
+    }
+
+    /**
+     * Moves the apple, this is instead of generating a new one each time the snake eats the apple
+     */
+    public void moveApple(int x, int y) {
+        int applePosX = TILE_WIDTH / 2;
+        int applePosY = TILE_HEIGHT / 2;
+
+        apple.setCenterX(x * TILE_WIDTH + applePosX);
+        apple.setCenterY(y * TILE_HEIGHT + applePosY);
     }
 
     /**
@@ -67,5 +83,9 @@ public class Apple implements GameObject {
                 moveApple();
             }
         }
+    }
+
+    public Circle getApple() {
+        return apple;
     }
 }

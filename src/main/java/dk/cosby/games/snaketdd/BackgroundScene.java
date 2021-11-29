@@ -1,7 +1,6 @@
 package dk.cosby.games.snaketdd;
 
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -13,7 +12,7 @@ import static dk.cosby.games.snaketdd.GameConstants.*;
  */
 public class BackgroundScene implements GameObject {
 
-    public Group backgroundGroup = new Group();
+    public final Group backgroundGroup = new Group();
 
     /**
      * This method generated a grid of green squares
@@ -37,10 +36,6 @@ public class BackgroundScene implements GameObject {
             }
         }
 
-        return backgroundGroup;
-    }
-
-    public Group getBackgroundGroup() {
         return backgroundGroup;
     }
 

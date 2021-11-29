@@ -1,6 +1,5 @@
 package dk.cosby.games.snaketdd.unittest;
 
-import dk.cosby.games.snaketdd.Initializer;
 import dk.cosby.games.snaketdd.Snake;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -129,8 +128,7 @@ class SnakeTest {
         int maxY = 0;
 
         for(Node n : snakeGroup.getChildren()) {
-            if(n instanceof Rectangle) {
-                Rectangle snakeBody = ((Rectangle) n);
+            if(n instanceof Rectangle snakeBody) {
                 if(minX > snakeBody.getX()) minX = (int) snakeBody.getX();
                 if(maxX < snakeBody.getX()) maxX = (int) snakeBody.getX();
                 if(minY > snakeBody.getY()) minY = (int) snakeBody.getY();
@@ -160,8 +158,7 @@ class SnakeTest {
         int maxY = 0;
 
         for(Node n : snakeGroup.getChildren()) {
-            if(n instanceof Rectangle) {
-                Rectangle snakeBody = ((Rectangle) n);
+            if(n instanceof Rectangle snakeBody) {
                 if(minX > snakeBody.getX()) minX = (int) snakeBody.getX();
                 if(maxX < snakeBody.getX()) maxX = (int) snakeBody.getX();
                 if(minY > snakeBody.getY()) minY = (int) snakeBody.getY();
@@ -191,8 +188,7 @@ class SnakeTest {
         int maxY = 0;
 
         for(Node n : snakeGroup.getChildren()) {
-            if(n instanceof Rectangle) {
-                Rectangle snakeBody = ((Rectangle) n);
+            if(n instanceof Rectangle snakeBody) {
                 if(minX > snakeBody.getX()) minX = (int) snakeBody.getX();
                 if(maxX < snakeBody.getX()) maxX = (int) snakeBody.getX();
                 if(minY > snakeBody.getY()) minY = (int) snakeBody.getY();
@@ -222,8 +218,7 @@ class SnakeTest {
         int maxY = 0;
 
         for(Node n : snakeGroup.getChildren()) {
-            if(n instanceof Rectangle) {
-                Rectangle snakeBody = ((Rectangle) n);
+            if(n instanceof Rectangle snakeBody) {
                 if(minX > snakeBody.getX()) minX = (int) snakeBody.getX();
                 if(maxX < snakeBody.getX()) maxX = (int) snakeBody.getX();
                 if(minY > snakeBody.getY()) minY = (int) snakeBody.getY();

@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
-import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 @ExtendWith(ApplicationExtension.class)
 class GameTest {
@@ -59,10 +58,10 @@ class GameTest {
         int minY = 0;
 
         for (Node node : root.getChildren()) {
-            if(node instanceof Rectangle) {
+            if(node instanceof Rectangle rectangle) {
 
-                int x = (int) ((Rectangle) node).getX();
-                int y = (int) ((Rectangle) node).getY();
+                int x = (int) rectangle.getX();
+                int y = (int) rectangle.getY();
 
                 if(x > maxX) {
                     maxX = x;
@@ -111,9 +110,9 @@ class GameTest {
         int applePosY = 0;
 
         for (Node node: root.getChildren()) {
-            if(node instanceof Circle) {
-                applePosX = (int) ((Circle) node).getCenterX();
-                applePosY = (int) ((Circle) node).getCenterY();
+            if(node instanceof Circle circle) {
+                applePosX = (int) circle.getCenterX();
+                applePosY = (int) circle.getCenterY();
             }
         }
 
@@ -131,8 +130,8 @@ class GameTest {
         int snakeLength = 0;
 
         for(Node node : root.getChildren()) {
-            if(node instanceof Group) {
-                if(((Group) node).getId() != null && ((Group) node).getId().equals("snake")) {
+            if(node instanceof Group group) {
+                if(group.getId() != null && group.getId().equals("snake")) {
                     for (Node n : ((Group) node).getChildren()) {
                         snakeLength++;
                     }
@@ -145,59 +144,18 @@ class GameTest {
     }
 
     @Test
-    void snake_must_be_located_in_upper_left_corner_when_game_starts() {
-
-        int snakeMinX = 0;
-        int snakeMaxX = 0;
-        int snakeMinY = 0;
-        int snakeMaxY = 0;
-
-        for(Node node : root.getChildren()) {
-            if(node instanceof Group) {
-                if(((Group) node).getId() != null && ((Group) node).getId().equals("snake")) {
-                    for (Node n : ((Group) node).getChildren()) {
-
-                        if(n instanceof Rectangle) {
-
-                            int x = (int) ((Rectangle) n).getX();
-                            int y = (int) ((Rectangle) n).getY();
-
-                            if(x < snakeMinX) {
-                                snakeMinX = x;
-                            }
-                            if(x > snakeMaxX) {
-                                snakeMaxX = x;
-                            }
-                            if(y < snakeMinY) {
-                                snakeMinY = y;
-                            }
-                            if(y > snakeMaxY) {
-                                snakeMaxY = y;
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-
-        assertEquals(0, snakeMinX);
-        assertEquals(0, snakeMinY);
-        assertEquals(TILE_WIDTH * 2, snakeMaxX);
-        assertEquals(0, snakeMaxY);
-
-    }
-
-    @Test
     void snake_must_go_down_when_s_is_pressed(FxRobot robot) {
 
         robot.push(KeyCode.S);
 
+        // waste some time, so snake has time to move
+        robot.clickOn("#apple"); // <-- ONLY FOR WAISTING TIME
+
         int snakeMaxY = Integer.MIN_VALUE;
 
         for(Node node : root.getChildren()) {
-            if(node instanceof Group) {
-                if(((Group) node).getId() != null && ((Group) node).getId().equals("snake")) {
+            if(node instanceof Group group) {
+                if(group.getId() != null && group.getId().equals("snake")) {
                     for (Node n : ((Group) node).getChildren()) {
 
                         if(n instanceof Rectangle) {

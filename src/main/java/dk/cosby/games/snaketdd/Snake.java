@@ -1,9 +1,7 @@
 package dk.cosby.games.snaketdd;
 
-import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -19,8 +17,8 @@ import static dk.cosby.games.snaketdd.GameConstants.*;
  */
 public class Snake implements GameObject {
 
-    private ArrayList<Rectangle> snake = new ArrayList<>();
-    private Group snakeGroup = new Group();
+    private final ArrayList<Rectangle> snake = new ArrayList<>();
+    private final Group snakeGroup = new Group();
     private char direction = 'R';
     private char directionAtLastUpdate = 'R';
     private boolean collisionWithApple = false;
@@ -77,8 +75,6 @@ public class Snake implements GameObject {
         // removes the tail of the snake, if it did not collide with an apple
         if(collisionWithApple) collisionWithApple = false;
         else snake.remove(0);
-
-
 
         Rectangle snakeHeadReference = snake.get(snake.size() - 1);
         Rectangle newSnakeHead;

@@ -1,0 +1,300 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Snake</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">dk.cosby.games.snaketdd</a>
+</div>
+
+<h1>Coverage Summary for Class: Snake (dk.cosby.games.snaketdd)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Snake</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72,7%
+  </span>
+  <span class="absValue">
+    (8/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,9%
+  </span>
+  <span class="absValue">
+    (58/66)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dk.cosby.games.snaketdd;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import javafx.geometry.BoundingBox;
+<i class="no-highlight">4</i>&nbsp;import javafx.geometry.Point2D;
+<i class="no-highlight">5</i>&nbsp;import javafx.scene.Group;
+<i class="no-highlight">6</i>&nbsp;import javafx.scene.Node;
+<i class="no-highlight">7</i>&nbsp;import javafx.scene.paint.Color;
+<i class="no-highlight">8</i>&nbsp;import javafx.scene.shape.Rectangle;
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;import java.util.*;
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;import static dk.cosby.games.snaketdd.GameConstants.*;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;/**
+<i class="no-highlight">15</i>&nbsp; * This class contains code the handle the snake
+<i class="no-highlight">16</i>&nbsp; * It implements GameObject since the snake need
+<i class="no-highlight">17</i>&nbsp; * to update movement every game-loop and handle
+<i class="no-highlight">18</i>&nbsp; * multiple collisions
+<i class="no-highlight">19</i>&nbsp; */
+<i class="no-highlight">20</i>&nbsp;public class Snake implements GameObject {
+<i class="no-highlight">21</i>&nbsp;
+<b class="fc"><i class="no-highlight">22</i>&nbsp;    private ArrayList&lt;Rectangle&gt; snake = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;    private Group snakeGroup = new Group();</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;    private char direction = &#39;R&#39;;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;    private char directionAtLastUpdate = &#39;R&#39;;</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;    private boolean collisionWithApple = false;</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;    private UIUpdater ui = null;</b>
+<i class="no-highlight">28</i>&nbsp;    private Initializer initializer;
+<i class="no-highlight">29</i>&nbsp;
+<i class="no-highlight">30</i>&nbsp;    // no-arg constructor
+<i class="no-highlight">31</i>&nbsp;    // used in tests
+<b class="nc"><i class="no-highlight">32</i>&nbsp;    public Snake() {</b>
+<b class="nc"><i class="no-highlight">33</i>&nbsp;        snakeGroup.setId(&quot;snake&quot;);</b>
+<i class="no-highlight">34</i>&nbsp;    }
+<i class="no-highlight">35</i>&nbsp;
+<b class="nc"><i class="no-highlight">36</i>&nbsp;    public Snake(Initializer initializer) {</b>
+<b class="nc"><i class="no-highlight">37</i>&nbsp;        this.initializer = initializer;</b>
+<b class="nc"><i class="no-highlight">38</i>&nbsp;        snakeGroup.setId(&quot;snake&quot;);</b>
+<i class="no-highlight">39</i>&nbsp;    }
+<i class="no-highlight">40</i>&nbsp;
+<b class="fc"><i class="no-highlight">41</i>&nbsp;    public Snake(Initializer initializer, UIUpdater ui) {</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        this.initializer = initializer;</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        this.ui = ui;</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        snakeGroup.setId(&quot;snake&quot;);</b>
+<i class="no-highlight">45</i>&nbsp;    }
+<i class="no-highlight">46</i>&nbsp;
+<i class="no-highlight">47</i>&nbsp;    /**
+<i class="no-highlight">48</i>&nbsp;     * This method creates a new snake with a length of three rectangles
+<i class="no-highlight">49</i>&nbsp;     * @return the snake as a group (of rectangles)
+<i class="no-highlight">50</i>&nbsp;     */
+<i class="no-highlight">51</i>&nbsp;    public Group createNewSnake() {
+<i class="no-highlight">52</i>&nbsp;
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        for (int i = 0; i &lt; 3; i++) {</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            Rectangle rect = new Rectangle(i * TILE_WIDTH,0, TILE_WIDTH, TILE_HEIGHT);</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;            rect.setFill(Color.rgb(155, 46, 201));</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;            snake.add(rect);</b>
+<i class="no-highlight">57</i>&nbsp;        }
+<i class="no-highlight">58</i>&nbsp;
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        snakeGroup.getChildren().addAll(snake);</b>
+<i class="no-highlight">60</i>&nbsp;
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        return snakeGroup;</b>
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;    }
+<i class="no-highlight">64</i>&nbsp;
+<i class="no-highlight">65</i>&nbsp;    /**
+<i class="no-highlight">66</i>&nbsp;     * This method moves the snake in the direction determined by the direction char
+<i class="no-highlight">67</i>&nbsp;     *
+<i class="no-highlight">68</i>&nbsp;     * Instead of iterating through the entire snake, it removes the tail
+<i class="no-highlight">69</i>&nbsp;     * of the snake and creates a new head for the snake.
+<i class="no-highlight">70</i>&nbsp;     * This approach removes unnecessary complexity when moving the snake
+<i class="no-highlight">71</i>&nbsp;     */
+<i class="no-highlight">72</i>&nbsp;    public void move() {
+<i class="no-highlight">73</i>&nbsp;
+<i class="no-highlight">74</i>&nbsp;        // removes the old snake from the group
+<b class="fc"><i class="no-highlight">75</i>&nbsp;        snakeGroup.getChildren().removeAll(snake);</b>
+<i class="no-highlight">76</i>&nbsp;
+<i class="no-highlight">77</i>&nbsp;        // removes the tail of the snake, if it did not collide with an apple
+<b class="fc"><i class="no-highlight">78</i>&nbsp;        if(collisionWithApple) collisionWithApple = false;</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        else snake.remove(0);</b>
+<i class="no-highlight">80</i>&nbsp;
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        Rectangle snakeHeadReference = snake.get(snake.size() - 1);</b>
+<i class="no-highlight">82</i>&nbsp;        Rectangle newSnakeHead;
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;        // creates a new head for the snake using the old head as a reference.
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        switch (direction) {</b>
+<i class="no-highlight">86</i>&nbsp;            case &#39;R&#39; -&gt; { // Right
+<b class="fc"><i class="no-highlight">87</i>&nbsp;                newSnakeHead = new Rectangle(snakeHeadReference.getX() + TILE_WIDTH, snakeHeadReference.getY(), TILE_WIDTH, TILE_HEIGHT);</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;                newSnakeHead.setFill(snakeHeadReference.getFill());</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;                snake.add(newSnakeHead);</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;                directionAtLastUpdate = &#39;R&#39;;</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;            }</b>
+<i class="no-highlight">92</i>&nbsp;            case &#39;L&#39; -&gt; { // Left
+<b class="fc"><i class="no-highlight">93</i>&nbsp;                newSnakeHead = new Rectangle(snakeHeadReference.getX() - TILE_WIDTH, snakeHeadReference.getY(), TILE_WIDTH, TILE_HEIGHT);</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;                newSnakeHead.setFill(snakeHeadReference.getFill());</b>
+<b class="fc"><i class="no-highlight">95</i>&nbsp;                snake.add(newSnakeHead);</b>
+<b class="fc"><i class="no-highlight">96</i>&nbsp;                directionAtLastUpdate = &#39;L&#39;;</b>
+<b class="fc"><i class="no-highlight">97</i>&nbsp;            }</b>
+<i class="no-highlight">98</i>&nbsp;            case &#39;U&#39; -&gt; { // Up
+<b class="fc"><i class="no-highlight">99</i>&nbsp;                newSnakeHead = new Rectangle(snakeHeadReference.getX(), snakeHeadReference.getY() - TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);</b>
+<b class="fc"><i class="no-highlight">100</i>&nbsp;                newSnakeHead.setFill(snakeHeadReference.getFill());</b>
+<b class="fc"><i class="no-highlight">101</i>&nbsp;                snake.add(newSnakeHead);</b>
+<b class="fc"><i class="no-highlight">102</i>&nbsp;                directionAtLastUpdate = &#39;U&#39;;</b>
+<b class="fc"><i class="no-highlight">103</i>&nbsp;            }</b>
+<i class="no-highlight">104</i>&nbsp;            case &#39;D&#39; -&gt; { // Down
+<b class="fc"><i class="no-highlight">105</i>&nbsp;                newSnakeHead = new Rectangle(snakeHeadReference.getX(), snakeHeadReference.getY() + TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);</b>
+<b class="fc"><i class="no-highlight">106</i>&nbsp;                newSnakeHead.setFill(snakeHeadReference.getFill());</b>
+<b class="fc"><i class="no-highlight">107</i>&nbsp;                snake.add(newSnakeHead);</b>
+<b class="fc"><i class="no-highlight">108</i>&nbsp;                directionAtLastUpdate = &#39;D&#39;;</b>
+<i class="no-highlight">109</i>&nbsp;            }
+<i class="no-highlight">110</i>&nbsp;        }
+<i class="no-highlight">111</i>&nbsp;
+<i class="no-highlight">112</i>&nbsp;        // Adds the new snake to the group
+<b class="fc"><i class="no-highlight">113</i>&nbsp;        snakeGroup.getChildren().addAll(snake);</b>
+<i class="no-highlight">114</i>&nbsp;
+<i class="no-highlight">115</i>&nbsp;        //System.out.println(snake.get(0));
+<i class="no-highlight">116</i>&nbsp;
+<i class="no-highlight">117</i>&nbsp;    }
+<i class="no-highlight">118</i>&nbsp;
+<i class="no-highlight">119</i>&nbsp;    /**
+<i class="no-highlight">120</i>&nbsp;     * Moves the snake with each game tick
+<i class="no-highlight">121</i>&nbsp;     */
+<i class="no-highlight">122</i>&nbsp;    @Override
+<i class="no-highlight">123</i>&nbsp;    public void update() {
+<b class="fc"><i class="no-highlight">124</i>&nbsp;        move();</b>
+<i class="no-highlight">125</i>&nbsp;    }
+<i class="no-highlight">126</i>&nbsp;
+<i class="no-highlight">127</i>&nbsp;    /**
+<i class="no-highlight">128</i>&nbsp;     * Handles collisions with other objects
+<i class="no-highlight">129</i>&nbsp;     * @param other the game-object it&#39;s colliding with
+<i class="no-highlight">130</i>&nbsp;     */
+<i class="no-highlight">131</i>&nbsp;    @Override
+<i class="no-highlight">132</i>&nbsp;    public void checkAndHandleCollision(GameObject other) {
+<b class="fc"><i class="no-highlight">133</i>&nbsp;        if(other instanceof Apple apple) {</b>
+<b class="fc"><i class="no-highlight">134</i>&nbsp;            if(snake.get(snake.size()-1).getBoundsInLocal().contains(new Point2D(apple.getApple().getCenterX(), apple.getApple().getCenterY()))) {</b>
+<i class="no-highlight">135</i>&nbsp;                // if the snakes head is colliding with an apple
+<b class="fc"><i class="no-highlight">136</i>&nbsp;                collisionWithApple = true; // used to make the snake longer</b>
+<b class="fc"><i class="no-highlight">137</i>&nbsp;                if (ui != null) ui.incrementScore(); // increments the score in UI</b>
+<i class="no-highlight">138</i>&nbsp;            }
+<i class="no-highlight">139</i>&nbsp;        }
+<i class="no-highlight">140</i>&nbsp;
+<b class="fc"><i class="no-highlight">141</i>&nbsp;        if (other instanceof BackgroundScene background) {</b>
+<b class="fc"><i class="no-highlight">142</i>&nbsp;            if(!(this.snake.get(this.snake.size() - 1).getBoundsInLocal().intersects(TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH * (GRID_SIZE - 2), TILE_HEIGHT * (GRID_SIZE - 2)))) {</b>
+<i class="no-highlight">143</i>&nbsp;                // This is used to check if the snakes head has left the background
+<i class="no-highlight">144</i>&nbsp;                // This means game-over (wall-hit)
+<i class="no-highlight">145</i>&nbsp;                // END GAME AND SHOW HIGHSCORE
+<b class="nc"><i class="no-highlight">146</i>&nbsp;                initializer.gameOver();</b>
+<i class="no-highlight">147</i>&nbsp;            }
+<i class="no-highlight">148</i>&nbsp;        }
+<i class="no-highlight">149</i>&nbsp;
+<b class="fc"><i class="no-highlight">150</i>&nbsp;        if (other instanceof Snake snakeCollider) {</b>
+<i class="no-highlight">151</i>&nbsp;
+<b class="fc"><i class="no-highlight">152</i>&nbsp;            Point2D snakeHeadCenter = new Point2D(snake.get(snake.size() -1).getX() + snake.get(snake.size() -1).getWidth() / 2, snake.get(snake.size() -1).getY() + snake.get(snake.size() -1).getHeight() / 2);</b>
+<i class="no-highlight">153</i>&nbsp;
+<b class="fc"><i class="no-highlight">154</i>&nbsp;            for (int i = 0; i &lt; snakeCollider.getSnake().size() - 2; i++) {</b>
+<b class="fc"><i class="no-highlight">155</i>&nbsp;                if(snakeCollider.getSnake().get(i).getBoundsInLocal().contains(snakeHeadCenter)) {</b>
+<i class="no-highlight">156</i>&nbsp;                    // If the snakes head have hit a part of it&#39;s body
+<i class="no-highlight">157</i>&nbsp;                    // this means game-over
+<b class="fc"><i class="no-highlight">158</i>&nbsp;                    initializer.gameOver();</b>
+<i class="no-highlight">159</i>&nbsp;                }
+<i class="no-highlight">160</i>&nbsp;            }
+<i class="no-highlight">161</i>&nbsp;        }
+<i class="no-highlight">162</i>&nbsp;
+<i class="no-highlight">163</i>&nbsp;    }
+<i class="no-highlight">164</i>&nbsp;
+<i class="no-highlight">165</i>&nbsp;    /**
+<i class="no-highlight">166</i>&nbsp;     * Updates the direction the snake should go on the next update
+<i class="no-highlight">167</i>&nbsp;     * The snake is not allowed to go in the opposite direction of what
+<i class="no-highlight">168</i>&nbsp;     * it is currently moving.
+<i class="no-highlight">169</i>&nbsp;     * @param dir the letter-code of the direction
+<i class="no-highlight">170</i>&nbsp;     *            L: Left
+<i class="no-highlight">171</i>&nbsp;     *            R: Right
+<i class="no-highlight">172</i>&nbsp;     *            U: Up
+<i class="no-highlight">173</i>&nbsp;     *            D: Down
+<i class="no-highlight">174</i>&nbsp;     */
+<i class="no-highlight">175</i>&nbsp;    public void setDirection(char dir) {
+<b class="fc"><i class="no-highlight">176</i>&nbsp;        if(dir == &#39;L&#39; &amp;&amp; directionAtLastUpdate != &#39;R&#39;) direction = &#39;L&#39;;</b>
+<b class="fc"><i class="no-highlight">177</i>&nbsp;        if(dir == &#39;R&#39; &amp;&amp; directionAtLastUpdate != &#39;L&#39;) direction = &#39;R&#39;;</b>
+<b class="fc"><i class="no-highlight">178</i>&nbsp;        if(dir == &#39;U&#39; &amp;&amp; directionAtLastUpdate != &#39;D&#39;) direction = &#39;U&#39;;</b>
+<b class="fc"><i class="no-highlight">179</i>&nbsp;        if(dir == &#39;D&#39; &amp;&amp; directionAtLastUpdate != &#39;U&#39;) direction = &#39;D&#39;;</b>
+<i class="no-highlight">180</i>&nbsp;    }
+<i class="no-highlight">181</i>&nbsp;
+<i class="no-highlight">182</i>&nbsp;    /////////////// GETTERS ///////////////////
+<i class="no-highlight">183</i>&nbsp;
+<i class="no-highlight">184</i>&nbsp;    public char getDirection() {
+<b class="nc"><i class="no-highlight">185</i>&nbsp;        return direction;</b>
+<i class="no-highlight">186</i>&nbsp;    }
+<i class="no-highlight">187</i>&nbsp;
+<i class="no-highlight">188</i>&nbsp;    public Group getSnakeGroup() {
+<b class="nc"><i class="no-highlight">189</i>&nbsp;        return snakeGroup;</b>
+<i class="no-highlight">190</i>&nbsp;    }
+<i class="no-highlight">191</i>&nbsp;
+<i class="no-highlight">192</i>&nbsp;    public ArrayList&lt;Rectangle&gt; getSnake() {
+<b class="fc"><i class="no-highlight">193</i>&nbsp;        return snake;</b>
+<i class="no-highlight">194</i>&nbsp;    }
+<i class="no-highlight">195</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-29 16:07</div>
+</div>
+</body>
+</html>

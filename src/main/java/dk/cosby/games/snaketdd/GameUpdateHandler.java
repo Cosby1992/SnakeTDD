@@ -11,49 +11,43 @@ import java.util.ArrayList;
 public class GameUpdateHandler {
 
     // gameObject contains all gameObjects influenced by the game-loop
-    private static ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private static final ArrayList<GameObject> gameObjects = new ArrayList<>();
     private static Thread thread;
-    private static boolean run;
+    private static boolean running;
 
     /**
      * This method initializes a game-loop on a new thread
      */
     public static void startGameLoop() {
 
-        run = true;
+        running = true;
 
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                long lastUpdate = System.currentTimeMillis();
-                long time;
+        thread = new Thread(() -> {
+            long lastUpdate = System.currentTimeMillis();
+            long time;
 
-                while (run) {
-                    time = System.currentTimeMillis();
+            while (running) {
+                time = System.currentTimeMillis();
 
-                    if(time - lastUpdate > 125) { // 8 ticks per second
+                if(time - lastUpdate > 125) { // 8 ticks per second
 
-                        // Platform.runLater is used to not block JavaFX main/ui thread
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
+                    // Platform.runLater is used to not block JavaFX main/ui thread
+                    Platform.runLater(() -> {
 
-                                // Update each gameObject
-                                for(GameObject go : gameObjects) {
-                                    go.update();
+                        // Update each gameObject
+                        for(GameObject go : gameObjects) {
+                            go.update();
 
-                                    // Check collitions between current object and
-                                    // all other objects in gameObjects
-                                    for(GameObject go2 : gameObjects) {
-                                        go.checkAndHandleCollision(go2);
-                                    }
-
-                                }
+                            // Check collisions between current object and
+                            // all other objects in gameObjects
+                            for(GameObject go2 : gameObjects) {
+                                go.checkAndHandleCollision(go2);
                             }
-                        });
 
-                        lastUpdate = time;
-                    }
+                        }
+                    });
+
+                    lastUpdate = time;
                 }
             }
         });
@@ -70,9 +64,19 @@ public class GameUpdateHandler {
     }
 
     public static void stopGame() {
-        run = false;
+        running = false;
     }
 
+    public static Thread getThread() {
+        return thread;
+    }
 
+    public static boolean isRunning() {
+        return running;
+    }
+
+    public static ArrayList<GameObject> getGameObjects() {
+        return gameObjects;
+    }
 }
 

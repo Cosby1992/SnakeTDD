@@ -1,0 +1,238 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GameUpdateHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">dk.cosby.games.snaketdd</a>
+</div>
+
+<h1>Coverage Summary for Class: GameUpdateHandler (dk.cosby.games.snaketdd)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameUpdateHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    55,6%
+  </span>
+  <span class="absValue">
+    (5/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    63,6%
+  </span>
+  <span class="absValue">
+    (7/11)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GameUpdateHandler$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GameUpdateHandler$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    69,2%
+  </span>
+  <span class="absValue">
+    (9/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84%
+  </span>
+  <span class="absValue">
+    (21/25)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dk.cosby.games.snaketdd;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import javafx.application.Platform;
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;/**
+<i class="no-highlight">8</i>&nbsp; * This class handles the game-loop and
+<i class="no-highlight">9</i>&nbsp; * updates every object registered in the gameObjects array
+<i class="no-highlight">10</i>&nbsp; */
+<b class="nc"><i class="no-highlight">11</i>&nbsp;public class GameUpdateHandler {</b>
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    // gameObject contains all gameObjects influenced by the game-loop
+<b class="fc"><i class="no-highlight">14</i>&nbsp;    private static ArrayList&lt;GameObject&gt; gameObjects = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">15</i>&nbsp;    private static Thread thread;
+<i class="no-highlight">16</i>&nbsp;    private static boolean running;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    /**
+<i class="no-highlight">19</i>&nbsp;     * This method initializes a game-loop on a new thread
+<i class="no-highlight">20</i>&nbsp;     */
+<i class="no-highlight">21</i>&nbsp;    public static void startGameLoop() {
+<i class="no-highlight">22</i>&nbsp;
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        running = true;</b>
+<i class="no-highlight">24</i>&nbsp;
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        thread = new Thread(new Runnable() {</b>
+<i class="no-highlight">26</i>&nbsp;            @Override
+<i class="no-highlight">27</i>&nbsp;            public void run() {
+<b class="fc"><i class="no-highlight">28</i>&nbsp;                long lastUpdate = System.currentTimeMillis();</b>
+<i class="no-highlight">29</i>&nbsp;                long time;
+<i class="no-highlight">30</i>&nbsp;
+<b class="fc"><i class="no-highlight">31</i>&nbsp;                while (running) {</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;                    time = System.currentTimeMillis();</b>
+<i class="no-highlight">33</i>&nbsp;
+<b class="fc"><i class="no-highlight">34</i>&nbsp;                    if(time - lastUpdate &gt; 125) { // 8 ticks per second</b>
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;                        // Platform.runLater is used to not block JavaFX main/ui thread
+<b class="fc"><i class="no-highlight">37</i>&nbsp;                        Platform.runLater(new Runnable() {</b>
+<i class="no-highlight">38</i>&nbsp;                            @Override
+<i class="no-highlight">39</i>&nbsp;                            public void run() {
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;                                // Update each gameObject
+<b class="fc"><i class="no-highlight">42</i>&nbsp;                                for(GameObject go : gameObjects) {</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;                                    go.update();</b>
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;                                    // Check collisions between current object and
+<i class="no-highlight">46</i>&nbsp;                                    // all other objects in gameObjects
+<b class="fc"><i class="no-highlight">47</i>&nbsp;                                    for(GameObject go2 : gameObjects) {</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;                                        go.checkAndHandleCollision(go2);</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;                                    }</b>
+<i class="no-highlight">50</i>&nbsp;
+<b class="fc"><i class="no-highlight">51</i>&nbsp;                                }</b>
+<i class="no-highlight">52</i>&nbsp;                            }
+<i class="no-highlight">53</i>&nbsp;                        });
+<i class="no-highlight">54</i>&nbsp;
+<b class="fc"><i class="no-highlight">55</i>&nbsp;                        lastUpdate = time;</b>
+<i class="no-highlight">56</i>&nbsp;                    }
+<i class="no-highlight">57</i>&nbsp;                }
+<i class="no-highlight">58</i>&nbsp;            }
+<i class="no-highlight">59</i>&nbsp;        });
+<i class="no-highlight">60</i>&nbsp;
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        thread.start();</b>
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    public static void registerGameObject(GameObject gameObject) {
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        gameObjects.add(gameObject);</b>
+<i class="no-highlight">66</i>&nbsp;    }
+<i class="no-highlight">67</i>&nbsp;
+<i class="no-highlight">68</i>&nbsp;    public static void unregisterGameObject(GameObject gameObject) {
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        gameObjects.remove(gameObject);</b>
+<i class="no-highlight">70</i>&nbsp;    }
+<i class="no-highlight">71</i>&nbsp;
+<i class="no-highlight">72</i>&nbsp;    public static void stopGame() {
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        running = false;</b>
+<i class="no-highlight">74</i>&nbsp;    }
+<i class="no-highlight">75</i>&nbsp;
+<i class="no-highlight">76</i>&nbsp;    public static Thread getThread() {
+<b class="nc"><i class="no-highlight">77</i>&nbsp;        return thread;</b>
+<i class="no-highlight">78</i>&nbsp;    }
+<i class="no-highlight">79</i>&nbsp;
+<i class="no-highlight">80</i>&nbsp;    public static boolean isRunning() {
+<b class="nc"><i class="no-highlight">81</i>&nbsp;        return running;</b>
+<i class="no-highlight">82</i>&nbsp;    }
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;    public static ArrayList&lt;GameObject&gt; getGameObjects() {
+<b class="nc"><i class="no-highlight">85</i>&nbsp;        return gameObjects;</b>
+<i class="no-highlight">86</i>&nbsp;    }
+<i class="no-highlight">87</i>&nbsp;}
+<i class="no-highlight">88</i>&nbsp;
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-29 16:07</div>
+</div>
+</body>
+</html>
