@@ -4,6 +4,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.util.function.Predicate;
+
 import static dk.cosby.games.snaketdd.GameConstants.*;
 
 /**
